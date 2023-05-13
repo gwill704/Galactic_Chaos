@@ -34,3 +34,7 @@ This method returns:
   * *vel*(list): A list of the velocity in each coordinate. [*Ex*: vel[2] = list of $v_z$ points]
   * *energy* (list): List of energy for each point in \{ $\textbf{x},\textbf{v}$ \}. It also returns time and $L_z$ for the values of the first index 1 and 2 respectively.
   * *poin* (list): It is a list of the dots for the Poincare's section in y = 0, z > 0. [*Ex*: poin[0]: positions in the Poincare's section. poin[1]: velocities in the Poincare's section]
+
+## plots.ipynb
+This 
+
