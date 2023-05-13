@@ -19,4 +19,18 @@ This is the main file of the repository. In it we find the definition of the cla
 
 **Methods**
 * *Chaos.v(vx = float, vy = float, vz = float)*: Returns the module of the velocity.
-* *Chaos.phi(x = float, y = float, z = float)*: 
+* *Chaos.phi(x = float, y = float, z = float)*: Returns the value of the logaritmic potential.
+$$\Phi = \frac{v_0^2}{2}\log|\frac{x^2+y^2+z^2}{r_c^2}|$$
+* *Chaos.a(x = float, y = float, z = float)*: Returns the value of acceleration derived from the logaritmic potentioal.
+$$\textbf{a} = -\nabla\Phi$$
+* *Chaos.verlet(x0 = float, y0 = float, z0 = float, k = int)*: Input of the initial position and returns the integrated trajectories in the phase space. It also returns energy and time, and the Poincare section of $x$ and $\dot{x}$. The integration method is based on Verlet integration:
+
+$$\textbf{x}_{i+1} = \textbf{x}_i + \textbf{v}_i*dt + \frac{1}{2}\textbf{a}(\textbf{x}_i)*dt^2$$
+
+$$\textbf{v}_{i+1} = \textbf{v}_i + \textbf{a}(x_i)*dt$$
+
+This method returns:
+  * *pos*(list): This is a list that saves all data points of the three coordinates of space. [*Ex:* pos[0] = list of x points]
+  * *vel*(list): A list of the velocity in each coordinate. [*Ex*: vel[2] = list of $v_z$ points]
+  * *energy* (list): List of energy for each point in \{ $\textbf{x},\textbf{v}$ \}. It also returns time and $L_z$ for the values of the first index 1 and 2 respectively.
+  * *poin* (list): It is a list of the dots for the Poincare's section in y = 0, z > 0. [*Ex*: poin[0]: positions in the Poincare's section. poin[1]: velocities in the Poincare's section]
