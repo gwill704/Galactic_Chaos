@@ -34,6 +34,7 @@ class Chaos:
         y = []
         z = []
         E = []
+        Lz = []
         t = []
         vx = []
         vy = []
@@ -54,6 +55,8 @@ class Chaos:
         vz.append(self.vz0 + 0.5*self.a(x0, y0, z0)[2]*self.dt)
 
         E.append(1/2*self.v(self.vx0, self.vy0, self.vz0)**2 + self.phi(x0, y0, z0))
+        
+        Lz.append(x[0]*vy[0] - y[0]*vx[0])
 
         t.append(0)
 
@@ -70,20 +73,28 @@ class Chaos:
 
             E.append(1/2*self.v(vx[i], vy[i], vz[i])**2 + self.phi(x[i], y[i], z[i]))
 
+            Lz.append(x[i]*vy[i] - y[i]*vx[i])
+            
             t.append(self.dt*i)
 
-            if (y[i-1]<0.) and (y[i]>0.) and (z[i] > 0.):
+            if (y[i-1]<0.) and (y[i]>0.) and (z[i] > 0.):# and Lz[i] == Lz[0]:
                 poinx.append(x[i])
                 poinvx.append(vx[i])
 
-
+        print('\nLz_inicial = ',Lz[0])
+        print('\nE_inicial = ',E[0])
+                
+        print('\nLz_mid = ',Lz[25000])
+        print('\nE_mid = ',E[25000])
+        
+        print('\nLz_ final = ',Lz[50000])
+        print('\nE_final = ',E[50000])
             
         pos = [x,y,z]
         vel = [vx,vy,vz]
-        energy = [E, t]
+        energy = [E, t, Lz]
         poin = [poinx, poinvx]
-        ac = [ace, t]
-        return pos, vel, energy, poin, ace
+        return pos, vel, energy, poin
 
 
 
