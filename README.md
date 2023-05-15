@@ -8,6 +8,19 @@ We include a virtual environment and a *requirements.txt* to install all the ext
 - Numpy
 - Random
 
+**IMPORTANT**: In this work, we will implicitly use the astronomical units, as the calculations we perform make sense in this system of units:
+
+| Magnitud  | Unit |
+| ------------- | ------------- |
+| Space (x)  | kpc  |
+| time (t)  | Gyr  |
+| Energy (E)  | $km^2/s^2$  |
+| Velocity (v)  | $km/s$  |
+| Aceleration (a)  |  $km^2/s^2$ |
+| Angular momentum (Lz)  | $km^2/s$  |
+
+*Note that we don't use the mass, as everyting is normalised to it*
+
 ## CHAOS.py file
 This is the main file of the repository. In it we find the definition of the class **Chaos** in which we find all the necesary tools for the study.
 
@@ -36,5 +49,5 @@ This method returns:
   * *poin* (list): It is a list of the dots for the Poincare's section in y = 0, z > 0. [*Ex*: poin[0]: positions in the Poincare's section. poin[1]: velocities in the Poincare's section]
 
 ## plots.ipynb
-This 
+This file will generate the poincaré section plot and the plot of the orbits by calling our class generated in the Chaos.py file.  
 
