@@ -48,6 +48,27 @@ This method returns:
   * *energy* (list): List of energy for each point in \{ $\textbf{x},\textbf{v}$ \}. It also returns time and $L_z$ for the values of the first index 1 and 2 respectively.
   * *poin* (list): It is a list of the dots for the Poincare's section in y = 0, z > 0. [*Ex*: poin[0]: positions in the Poincare's section. poin[1]: velocities in the Poincare's section]
 
-## plots.ipynb
-This file will generate the poincaré section plot and the plot of the orbits by calling our class generated in the Chaos.py file.  
 
+Also, an important thing that this program does, is generating directories with the name of the parameters used, where the trajectories of each star emulated are saved on a datak.txt file (with k the number of the star). This is important because we will use not only the file plots.ipynb to plot everything we need but also gnuplot as it's better to see what's happening in real time.
+
+## plots.ipynb
+This file will generate the poincaré section plot and the plot of the orbits by calling our class generated in the Chaos.py file.  In the begggining of the file we can change the initial energy E, b and c, the asimetrical parameters, and the reference length rc. The other parameters are fixed to allow bounding states. 
+The graphs generated are automatiquely saved in a directory named data. (auto generated)
+
+# Use of gnuplot
+First of all, you have to install gnuplot on your device. You can use the Linux Ubuntu terminal command 
+```console
+sudo apt-get gnuplot
+```
+Or you can download it [here](https://sourceforge.net/projects/gnuplot/files/gnuplot/) if you are Windows user.
+
+After having installed gnuplot, you can run it with:
+
+```console
+gnuplot
+```
+Or with the executable of windows, and use th files .txt as we will explain here.
+
+1. First of all you have to be in the same directory as the project
+2. Then you can draw one of the files to the display of gnuplot and it will execute itself
+3. You should have generated the data with plots.ipynb
