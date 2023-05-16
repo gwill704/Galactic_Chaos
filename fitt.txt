@@ -1,9 +1,0 @@
-set xlabel 'X(kPc)'
-set ylabel 'Y(kPc)'
-set zlabel 'Z(kPc)'
-unset key
-do for[ii=1:500] {
-splot for [j=14:19] 'datos'.j.'.txt' every ::1::ii w l,	 
-#'datos0.txt' u 1:2 every ::ii::ii w p pt 22 title 'posicion en XY',
-}
-pause -1
