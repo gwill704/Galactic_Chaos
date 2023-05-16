@@ -1,0 +1,5 @@
+set terminal wxt
+unset key
+set xlabel 'X(kPc)'
+set ylabel 'Vx(km/s)
+plot for [i=0:19] 'poin'.i.'.txt' u 1:2 w p pt 7 ps 0.6 lc 7
