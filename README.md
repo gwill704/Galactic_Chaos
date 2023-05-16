@@ -53,7 +53,6 @@ This method returns:
 
 Also, an important thing that this program does, is generating directories with the name of the parameters used, where the trajectories of each star emulated are saved on a datak.txt file (with k the number of the star). This is important because we will use not only the file plots.ipynb to plot everything we need but also gnuplot as it's better to see what's happening in real time.
 
-* *Chaos.angularspeed(k = int)*: It is exactly as Verlet method but changing to a rotating frame with $\Omega$ angular velocity.
 ## plots.ipynb
 This file will generate the poincaré section plot and the plot of the orbits by calling our class generated in the Chaos.py file.  In the begggining of the file we can change the initial energy E, b and c, the asimetrical parameters, and the reference length rc. The other parameters are fixed to allow bounding states. 
 The graphs generated are automatiquely saved in a directory named data. (auto generated)
