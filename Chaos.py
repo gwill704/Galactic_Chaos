@@ -18,31 +18,18 @@ class Chaos:
         self.E = E
         self.omega = omega
     def v0(self,x, y, z):
-        return np.sqrt((2*self.E)/(1 + np.log(np.abs((self.x0**2+(self.y0/self.b)**2+(self.z0/self.c)**2)/(self.rc**2)))))
-    
-    def v0_w(self,x, y, z):
-        return np.sqrt((2*self.E + self.x0**2 * self.omega**2)/(1 + np.log(np.abs((self.x0**2+(self.y0/self.b)**2+(self.z0/self.c)**2)/(self.rc**2)))))
+        return np.sqrt((2*self.E+ self.x0**2 * self.omega**2)/(1 + np.log(np.abs((self.x0**2+(self.y0/self.b)**2+(self.z0/self.c)**2)/(self.rc**2)))))
     
     def v(self, vx, vy, vz):
         return np.sqrt(vx**2+vy**2+vz**2)
 
     def phi(self, x, y, z):
         return (self.v0(self.x0,self.y0,self.z0)**2/2)*np.log(np.abs((x**2+(y/self.b)**2+(z/self.c)**2)/self.rc**2))
-    
-    def phi_w(self, x, y, z):
-        return (self.v0_w(self.x0,self.y0,self.z0)**2/2)*np.log(np.abs((x**2+(y/self.b)**2+(z/self.c)**2)/self.rc**2))
 
     def a(self, x, y, z):
         dphix = (self.v0(self.x0,self.y0,self.z0)**2)*(x/np.abs(x**2+(y/self.b)**2+(z/self.c)**2))
         dphiy = (self.v0(self.x0,self.y0,self.z0)**2)*((y/self.b)/np.abs(x**2+(y/self.b)**2+(z/self.c)**2)) 
         dphiz = (self.v0(self.x0,self.y0,self.z0)**2)*((z/self.c)/np.abs(x**2+(y/self.b)**2+(z/self.c)**2))
-        grad = [-dphix, -dphiy, -dphiz]
-        return grad
-    
-    def a_w(self, x, y, z):
-        dphix = (self.v0_w(self.x0,self.y0,self.z0)**2)*(x/np.abs(x**2+(y/self.b)**2+(z/self.c)**2))
-        dphiy = (self.v0_w(self.x0,self.y0,self.z0)**2)*((y/self.b)/np.abs(x**2+(y/self.b)**2+(z/self.c)**2)) 
-        dphiz = (self.v0_w(self.x0,self.y0,self.z0)**2)*((z/self.c)/np.abs(x**2+(y/self.b)**2+(z/self.c)**2))
         grad = [-dphix, -dphiy, -dphiz]
         return grad
 
@@ -62,7 +49,7 @@ class Chaos:
         poinvx = []
         
         # Creation of .txt files to use gnuplot
-        orbit = 'orbits b = '+str(self.b)+' c = '+str(self.c)+' E = '+str(self.E)
+        orbit = 'orbits b = '+str(self.b)+' c = '+str(self.c)+' E = '+str(self.E)+' rc = '+str(self.rc)
         os.makedirs(orbit, exist_ok = True)
         g = open(orbit+'/poin'+str(k)+'.txt', 'w')
         f = open(orbit+'/datos'+str(k) +'.txt', 'w')
@@ -71,11 +58,10 @@ class Chaos:
         
         # Initial velocities and initial Lz
         
-        Lz = rd.uniform(0,np.sqrt(self.v0(self.x0, self.y0, self.z0)*self.x0**2))
+        Lz = rd.uniform(0,self.x0*self.v0(self.x0, self.y0, self.z0))
         vx0 = 0
         vy0 = Lz / self.x0
-        vz0 = np.sqrt((-vy0**2 + self.v0(self.x0,self.y0,self.z0)**2))
-        
+        vz0 = np.sqrt((self.v0(self.x0,self.y0,self.z0)**2 - vy0**2))
         
         x.append(self.x0 + vx0*self.dt + 0.5*self.a(self.x0, self.y0, self.z0)[0]*self.dt**2)
         y.append(self.y0 + vy0*self.dt + 0.5*self.a(self.x0, self.y0, self.z0)[1]*self.dt**2)
@@ -92,7 +78,7 @@ class Chaos:
 
         t.append(0)
 
-        for i in range(5000):
+        for i in range(50000):
 
             x.append(x[i] + vx[i]*self.dt + 0.5*self.a(x[i], y[i], z[i])[0]*self.dt**2)
             y.append(y[i] + vy[i]*self.dt + 0.5*self.a(x[i], y[i], z[i])[1]*self.dt**2)
@@ -102,8 +88,6 @@ class Chaos:
             vx.append(vx[i] + 0.5*(self.a(x[i], y[i], z[i])[0])*self.dt)
             vy.append(vy[i] + 0.5*(self.a(x[i], y[i], z[i])[1])*self.dt)
             vz.append(vz[i] + 0.5*(self.a(x[i], y[i], z[i])[2])*self.dt)
-            '''vy.append((Lz[i]-y[i+1]*vx[i+1])/x[i+1])
-            vz.append(np.sqrt((2*(self.E-self.phi(x[i+1], y[i+1], z[i+1])))-vx[i+1]**2-vy[i+1]**2))'''
 
             En.append(1/2*self.v(vx[i+1], vy[i+1], vz[i+1])**2 + self.phi(x[i+1], y[i+1], z[i+1]))
 
@@ -120,8 +104,9 @@ class Chaos:
         g.close()
         
         # Remove ''' if you want display of the iterations
-        '''print('PARTICULE:' , k)
-
+        '''
+        print('PARTICULE:' , k)
+        
         print('\nLz_inicial = ',Lzm[0])
         print('\nE_inicial = ',En[0])
                 
@@ -129,7 +114,8 @@ class Chaos:
         print('\nE_mid = ',En[25000])
         
         print('\nLz_ final = ',Lzm[50000])
-        print('\nE_final = ',En[50000])'''
+        print('\nE_final = ',En[50000])
+        '''
             
         pos = [x,y,z]
         vel = [vx,vy,vz]
@@ -152,20 +138,19 @@ class Chaos:
         poinvx = []
         
         # Creation of .txt files to use gnuplot
-        orbit_w = 'orbits_with_angular_speed b = '+str(self.b)+' c = '+str(self.c)+' E = '+str(self.E)
-        os.makedirs(orbit_w, exist_ok = True)
-        g = open(orbit_w+'/poin'+str(k)+'.txt', 'w')
-        f = open(orbit_w+'/datos'+str(k) +'.txt', 'w')
+        orbit = 'orbits_with_angular_speed b = '+str(self.b)+' c = '+str(self.c)+' E = '+str(self.E)+' rc = '+str(self.rc)
+        os.makedirs(orbit, exist_ok = True)
+        g = open(orbit+'/poin_w' +str(k)+'.txt', 'w')
+        f = open(orbit+'/datos_w'+str(k) +'.txt', 'w')
         f.write(str(self.x0) + str('\t') + str(self.y0) + str('\t') + str(self.z0) + str('\n'))
         
         
         # Initial velocities and initial Lz
         
-        Lz = rd.uniform(0,np.sqrt((2*(self.E-self.phi(self.x0,self.y0,self.z0)**2))))
-        print('Lz = ', Lz)
+        Lz = rd.uniform(0,self.x0*self.v0(self.x0, self.y0, self.z0))
         vx0 = 0.
         vy0 = Lz / self.x0
-        vz0 = np.sqrt((-vy0**2 + ((2*self.E + self.x0**2*self.omega**2)/(1+np.log(np.abs(self.x0**2/self.rc**2))))))
+        vz0 = np.sqrt(self.v0(self.x0, self.y0, self.z0)**2 - vy0**2)
         
         
         x.append(self.x0 + vx0*self.dt + 0.5*self.a_w(self.x0, self.y0, self.z0)[0]*self.dt**2)
@@ -204,9 +189,10 @@ class Chaos:
             if (y[i-1]<0.) and (y[i]>0.) and (z[i] > 0.):
                 poinx.append(x[i])
                 poinvx.append(vx[i])
-                g.write(str(x[i]) + str('\t') +str(vx[i]) + str('\n'))
+                g.write(str(x[i])+ str('\t') + str(vx[i]) + str('\n'))
         
         f.close()
+        g.close()
         
         # Remove ''' if you want display of the iterations
         '''
@@ -220,7 +206,8 @@ class Chaos:
         
         print('\nLz_ final = ',Lzm[50000])
         print('\nE_final = ',En[50000])
-            '''
+        '''
+            
         pos = [x,y,z]
         vel = [vx,vy,vz]
         energy = [En, t, Lzm]
