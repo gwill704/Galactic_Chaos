@@ -69,6 +69,6 @@ gnuplot
 ```
 Or with the executable of windows, and use th files .txt as we will explain here.
 
-1. First of all you have to be in the same directory as the project
-2. Then you can draw one of the files to the display of gnuplot and it will execute itself
+1. First of all you have to be in the same directory as the project's orbits you want to plot
+2. Then you can draw one of the files to the display of gnuplot and it will execute itself. Can be fitnormal.txt or fiteotontorroncete.txt
 3. You should have generated the data with plots.ipynb
