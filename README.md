@@ -30,6 +30,7 @@ This is the main file of the repository. In it we find the definition of the cla
 * *Asymetry parameters*: b and c. We recommend for physical cases to maintain the criteria c < b and both between 0 and 1. The parameter b introduces an asymetry in the y coordinate and the c in the z component. Both act on the potential $\Phi$.
 * *Initial energy*: Initial energy of the orbit E.
 * *Reference length*: rc. It will act on the $\Phi$ aswell. For bound-states we want rc at least bigger than the initial module $|\textbf{r}| = \sqrt{x^2+y^2+z^2}$
+* *Omega* $\Omega$ Angular velocity of the rotating frame model. 
 
 **Methods**
 * *Chaos.v0(x = float, y= float, z= float)*: Returns the initial velocity given the initial coordinates and and energy. For bounding states $E <0$
@@ -56,6 +57,8 @@ Also, an important thing that this program does, is generating directories with 
 ## plots.ipynb
 This file will generate the poincaré section plot and the plot of the orbits by calling our class generated in the Chaos.py file.  In the begggining of the file we can change the initial energy E, b and c, the asimetrical parameters, and the reference length rc. The other parameters are fixed to allow bounding states. 
 The graphs generated are automatiquely saved in a directory named data. (auto generated)
+
+Omega is the angular velocity of the reference frame. So for a static reference frame impose omega = 0.
 
 ## Makefile
 The commands of the makefile are:
