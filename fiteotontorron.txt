@@ -1,1 +1,0 @@
-splot for [i=0:4] 'datos'.i.'.txt' using 1:2:3 w lp ps 0.5 title 'Particule'.i.''
