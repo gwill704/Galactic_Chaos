@@ -58,6 +58,12 @@ Also, an important thing that this program does, is generating directories with 
 This file will generate the poincaré section plot and the plot of the orbits by calling our class generated in the Chaos.py file.  In the begggining of the file we can change the initial energy E, b and c, the asimetrical parameters, and the reference length rc. The other parameters are fixed to allow bounding states. 
 The graphs generated are automatiquely saved in a directory named data. (auto generated)
 
+## Makefile
+The commands of the makefile are:
+* **make run**: It compiles Chaos.py (python3 Chaos.py)
+* **make install**: It installs all the necessary packages from requirements.txt using pip (pip -r requirements.txt)
+* **make jupy**: Depletes jupyter-lab (jupyter-lab)
+As we used a .ipynb file to compute everything, we didn't know how to take advantage from a Makefile, but maybe we could have used it to represent the data on gnuplot
 # Use of gnuplot
 First of all, you have to install gnuplot on your device. You can use the Linux Ubuntu terminal command 
 ```console
